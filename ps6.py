@@ -318,8 +318,7 @@ class StandardRobot(Robot):
         #raise NotImplementedError
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-testRobotMovement(StandardRobot, RectangularRoom)
-
+# testRobotMovement(StandardRobot, RectangularRoom)
 
 # === Problem 3
 def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
@@ -440,7 +439,8 @@ class RandomWalkRobot(Robot):
 
         #raise NotImplementedError
 
-testRobotMovement(RandomWalkRobot, RectangularRoom)
+# Uncomment this line to see your implementation of RandomWalkRobot in action!
+# testRobotMovement(RandomWalkRobot, RectangularRoom)
 
 
 

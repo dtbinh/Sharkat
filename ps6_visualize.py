@@ -59,7 +59,7 @@ class RobotVisualization:
     def _status_string(self, time, num_clean_tiles):
         "Returns an appropriate status string to print."
         percent_clean = 100 * num_clean_tiles / (self.width * self.height)
-        return "Time: %04d; %d tiles (%d%%) cleaned" % \
+        return "Sharkat's status - Time: %04d; %d tiles (%d%%) cleaned" % \
             (time, num_clean_tiles, percent_clean)
 
     def _map_coords(self, x, y):
