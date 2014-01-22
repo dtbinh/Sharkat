@@ -7,6 +7,7 @@ import math
 import time
 
 from Tkinter import *
+from PIL import Image, ImageTk
 
 class RobotVisualization:
     def __init__(self, num_robots, width, height, delay = 0.2):
@@ -24,6 +25,10 @@ class RobotVisualization:
         self.w = Canvas(self.master, width=500, height=500)
         self.w.pack()
         self.master.update()
+
+        # load image
+        self.image = Image.open("sharkat_small.jpg")
+        self.photo = ImageTk.PhotoImage(self.image)
 
         # Draw a backing and lines
         x1, y1 = self._map_coords(0, 0)
@@ -79,6 +84,15 @@ class RobotVisualization:
                                   y + 0.6 * math.cos(math.radians(d2)))
         return self.w.create_polygon([x1, y1, x2, y2, x3, y3], fill="red")
 
+    def _draw_sharkat(self, position, direction):
+        x, y = position.getX(), position.getY()
+        x1, y1 = self._map_coords(x, y)
+        print x, y
+        print x1, y1
+
+        # return self.w.create_oval(x1 - 10, y1 - 10, x1 + 10, y1 + 10)
+        return self.w.create_image(x1, y1, image = self.photo)
+
     def update(self, room, robots):
         "Redraws the visualization with the specified room and robot state."
         # Removes a gray square for any tiles have been cleaned.
@@ -98,10 +112,17 @@ class RobotVisualization:
             x, y = pos.getX(), pos.getY()
             x1, y1 = self._map_coords(x - 0.08, y - 0.08)
             x2, y2 = self._map_coords(x + 0.08, y + 0.08)
-            self.robots.append(self.w.create_oval(x1, y1, x2, y2,
-                                                  fill = "black"))
+            # self.robots.append(self.w.create_oval(x1, y1, x2, y2,
+            #                                      fill = "black"))
+            # self.robots.append(
+            #   self._draw_robot(robot.getRobotPosition(), robot.getRobotDirection()))
             self.robots.append(
-                self._draw_robot(robot.getRobotPosition(), robot.getRobotDirection()))
+                self._draw_sharkat(
+                    robot.getRobotPosition(),
+                    robot.getRobotDirection()
+                )
+            )
+
         # Update text
         self.w.delete(self.text)
         self.time += 1

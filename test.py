@@ -1,14 +1,28 @@
-# from ps6 import Position
-# from ps6 import RectangularRoom
-# from ps6 import Robot
-# from ps6 import StandardRobot
-# from ps6 import runSimulation
-# from ps6 import RandomWalkRobot
+from ps6_utils import Position
+from ps6_room import RectangularRoom
+from ps6 import Robot, StandardRobot, RandomWalkRobot
 
-# from ps6_verify_movement27 import testRobotMovement
+from test_robot_movement import testRobotMovement
 
-# testRobotMovement(RandomWalkRobot, RectangularRoom)
+testRobotMovement(RandomWalkRobot, RectangularRoom)
 
-from Tkinter import *
+# from Tkinter import *
+# from PIL import Image, ImageTk
 
-photo = PhotoImage(file="sharkat.jpg")
+# # Initialize a drawing surface
+# master = Tk()
+# w = Canvas(master, width=500, height=500)
+# w.pack()
+# master.update()
+
+
+# image = Image.open("sharkat_small.jpg")
+# photo = ImageTk.PhotoImage(image)
+# print photo.height(), photo.width()
+
+# w.create_image(0 + photo.width()/2, 0 + photo.height()/2, image = photo)
+# w.pack()
+# master.update()
+
+# while (True):
+# 	pass
