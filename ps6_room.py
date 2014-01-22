@@ -55,6 +55,9 @@ class RectangularRoom(object):
          
         #raise NotImplementedError
 
+    def dirtyTileAtPosition(self, pos):
+        raise NotImplementedError
+
     def isTileCleaned(self, m, n):
         """
         Return True if the tile (m, n) has been cleaned.

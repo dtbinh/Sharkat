@@ -134,6 +134,40 @@ class StandardRobot(Robot):
         
         #raise NotImplementedError
 
+# === Adding the duck
+class Duck(Robot):
+    """
+    Represents a duck (Anas superciliosa).
+    A duck moves pretty much like a standard robot, except that it does not clean the room.
+    """
+    def updatePosition(self):
+        """ update the position for the duck without cleaning the room """
+        self.robotPosition = Position.getNewPosition(self.robotPosition, \
+            Robot.getRobotDirection(self), self.speed) 
+
+        while RectangularRoom.isPositionInRoom(\
+            self.room, self.robotPosition) == False:
+            direction = Robot.getRobotDirection(self)
+            direction = direction + 180
+
+            if direction > 360:
+                direction = direction = direction-360
+
+            self.robotPosition = Position.getNewPosition(\
+                self.robotPosition, direction, self.speed)
+
+            direction = random.randrange(0, 360)
+            self.robotDirection = direction 
+
+            self.robotPosition = Position.getNewPosition(\
+                self.robotPosition, self.robotDirection, self.speed)
+
+    def updatePositionAndDirty(self):
+        """
+        This naughty duck dirties the tiles for the cats to clean !!!
+        """
+        raise NotImplementedError
+
 # === Problem 4
 class RandomWalkRobot(Robot):
     """

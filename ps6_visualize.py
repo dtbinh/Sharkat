@@ -10,7 +10,7 @@ from Tkinter import *
 from PIL import Image, ImageTk
 
 class RobotVisualization:
-    def __init__(self, num_robots, width, height, delay = 0.2):
+    def __init__(self, num_robots, width, height, delay = 0.2, num_ducks = 1):
         "Initializes a visualization with the specified parameters."
         # Number of seconds to pause after each frame
         self.delay = delay
@@ -27,8 +27,10 @@ class RobotVisualization:
         self.master.update()
 
         # load image
-        self.image = Image.open("sharkat_small.jpg")
-        self.photo = ImageTk.PhotoImage(self.image)
+        self.sharkat_image = Image.open("sharkat_small.jpg")
+        self.sharkat_photo = ImageTk.PhotoImage(self.sharkat_image)
+        self.duck_image = Image.open("duck_small.jpg")
+        self.duck_photo = ImageTk.PhotoImage(self.duck_image)
 
         # Draw a backing and lines
         x1, y1 = self._map_coords(0, 0)
@@ -56,6 +58,7 @@ class RobotVisualization:
 
         # Draw some status text
         self.robots = None
+        self.ducks = None
         self.text = self.w.create_text(25, 0, anchor=NW,
                                        text=self._status_string(0, 0))
         self.time = 0
@@ -87,39 +90,54 @@ class RobotVisualization:
     def _draw_sharkat(self, position, direction):
         x, y = position.getX(), position.getY()
         x1, y1 = self._map_coords(x, y)
-        print x, y
-        print x1, y1
 
-        # return self.w.create_oval(x1 - 10, y1 - 10, x1 + 10, y1 + 10)
-        return self.w.create_image(x1, y1, image = self.photo)
+        return self.w.create_image(x1, y1, image = self.sharkat_photo)
 
-    def update(self, room, robots):
+    def _draw_duck(self, position, direction):
+        x, y = position.getX(), position.getY()
+        x1, y1 = self._map_coords(x, y)
+
+        return self.w.create_image(x1, y1, image = self.duck_photo)
+
+    def update(self, room, robots, ducks):
         "Redraws the visualization with the specified room and robot state."
         # Removes a gray square for any tiles have been cleaned.
         for i in range(self.width):
             for j in range(self.height):
                 if room.isTileCleaned(i, j):
                     self.w.delete(self.tiles[(i, j)])
+
         # Delete all existing robots.
         if self.robots:
             for robot in self.robots:
                 self.w.delete(robot)
                 self.master.update_idletasks()
+
+        # Delete all existing ducks.
+        if self.ducks:
+            for duck in self.ducks:
+                self.w.delete(duck)
+                self.master.update_idletasks()
+
         # Draw new robots
         self.robots = []
         for robot in robots:
             pos = robot.getRobotPosition()
-            x, y = pos.getX(), pos.getY()
-            x1, y1 = self._map_coords(x - 0.08, y - 0.08)
-            x2, y2 = self._map_coords(x + 0.08, y + 0.08)
-            # self.robots.append(self.w.create_oval(x1, y1, x2, y2,
-            #                                      fill = "black"))
-            # self.robots.append(
-            #   self._draw_robot(robot.getRobotPosition(), robot.getRobotDirection()))
             self.robots.append(
                 self._draw_sharkat(
                     robot.getRobotPosition(),
                     robot.getRobotDirection()
+                )
+            )
+
+        # Draw new ducks
+        self.ducks = []
+        for duck in ducks:
+            pos = duck.getRobotPosition()
+            self.ducks.append(
+                self._draw_duck(
+                    duck.getRobotPosition(),
+                    duck.getRobotDirection()
                 )
             )
 
